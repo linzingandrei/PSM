@@ -3,7 +3,7 @@
 #include "logging.h"
 
 
-void KernelMain()
+void _KernelMain()
 {
     __magic();    // break into BOCHS
     

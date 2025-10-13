@@ -44,24 +44,144 @@ ASMEntryPoint:
     MOV     DWORD [0x000B8004], '6141'                  ; 64 bit build marker
 %endif
 
-
-
     MOV     ESP, TOP_OF_STACK                           ; just below the kernel
     
     break
-
-    ;TODO!!! define page tables; see https://wiki.osdev.org ,Intel's manual, http://www.brokenthorn.com/Resources/ ,http://www.jamesmolloy.co.uk/tutorial_html/
-
-    ;TODO!!! activate pagging
     
-    ;TODO!!! transition to 64bits-long mode
+    PML4_ADDR equ 0x1000
+    PDPT_ADDR equ 0x2000
+    PDT_ADDR equ 0x3000
+    PT_ADDR equ 0x4000
+    PT2_ADDR equ 0x5000
 
-    MOV     EAX, _KernelMain     ; after 64bits transition is implemented the kernel must be compiled on x64
-    CALL    EAX
+    mov edi, 0x0
+    xor eax, eax
+    mov ecx, 512
+    rep stosd
+
+    mov edi, PML4_ADDR
+    xor eax, eax
+    mov ecx, 512
+    rep stosd 
+
+    mov edi, PDPT_ADDR
+    xor eax, eax
+    mov ecx, 512
+    rep stosd
+
+    mov edi, PDT_ADDR
+    xor eax, eax
+    mov ecx, 512
+    rep stosd
+
+    mov edi, PT_ADDR
+    xor eax, eax
+    mov ecx, 1024
+    rep stosd
+
+    ; break
     
-    break
-    CLI
-    HLT
+    mov edi, PML4_ADDR 
+    mov cr3, edi
+
+    ; break
+
+    PT_PRESENT equ 1
+    PT_WRITABLE equ 2
+
+    mov edi, PML4_ADDR
+    mov eax, PDPT_ADDR | PT_PRESENT | PT_WRITABLE
+    mov dword [edi], eax
+    mov dword [edi+4], 0 
+
+    mov edi, PDPT_ADDR
+    mov eax, PDT_ADDR | PT_PRESENT | PT_WRITABLE 
+    mov dword [edi], eax
+    mov dword [edi+4], 0 
+
+    mov edi, PDT_ADDR
+    mov eax, PT_ADDR | PT_PRESENT | PT_WRITABLE 
+    mov dword [edi], eax
+    mov dword [edi+4], 0 
+    mov dword [edi+8], PT2_ADDR | PT_PRESENT | PT_WRITABLE 
+    mov dword [edi+12], 0
+
+    mov edi, PT_ADDR
+    mov eax, 0x00
+    mov ecx, 512
+    .SetPTEntry:
+        mov ebx, eax
+        or ebx, PT_PRESENT | PT_WRITABLE
+        mov dword [edi], ebx
+        mov dword [edi+4], 0
+        add eax, 0x1000
+        add edi, 8
+        loop .SetPTEntry
+    
+    ; break
+
+    mov edi, PT2_ADDR
+    mov eax, 0x200000
+    mov ecx, 512
+    .SetPTEntry2:
+        mov ebx, eax
+        or ebx, PT_PRESENT | PT_WRITABLE
+        mov dword [edi], ebx
+        mov dword [edi+4], 0
+        add eax, 0x1000
+        add edi, 8
+        loop .SetPTEntry2
+    
+    ; break
+
+    CR4_PAE_ENABLE equ 1 << 5
+    mov eax, cr4
+    or eax, CR4_PAE_ENABLE
+    mov cr4, eax
+
+    ; break
+
+    EFER_MSR equ 0xC0000080
+    EFER_LM_ENABLE equ 1 << 8
+    mov ecx, EFER_MSR
+    rdmsr
+    or eax, EFER_LM_ENABLE
+    wrmsr
+
+    ; break
+
+    mov eax, cr0
+    or eax, (1 << 31) | (1 << 0)
+    mov cr0, eax
+
+    ; break
+
+
+    ; break
+
+    lgdt [GDT64]
+    jmp 0x08:LongMode 
+
+    ; break
+
+    [BITS 64]
+    LongMode:
+        ; break
+        cli
+
+        mov ax, 0x10 
+        mov ds, ax
+        mov es, ax
+        mov fs, ax
+        mov gs, ax
+        mov ss, ax
+
+        MOV     RAX, _KernelMain
+        CALL    RAX
+        
+        break
+        CLI
+        HLT
 
 ;;--------------------------------------------------------
 
@@ -78,11 +198,22 @@ __magic:
     RET
     
 __enableSSE:                ;; enable SSE instructions (CR4.OSFXSR = 1)  
-    MOV     EAX, CR4
+    MOV     RAX, CR4
     OR      EAX, 0x00000200
-    MOV     CR4, EAX
+    MOV     CR4, RAX
     RET
     
 EXPORT2C ASMEntryPoint, __cli, __sti, __magic, __enableSSE
 
+; GDT TABLE FOR x64. It has to have the .end: at the end otherwise it won't jump to the kernel correctly.
 
+FLAT_DESCRIPTOR_CODE64  equ 0x00AF9A000000FFFF  ; code, long-mode
+FLAT_DESCRIPTOR_DATA64  equ 0x00AF92000000FFFF  ; data, long-mode
+GDT64:
+    .limit  dw  GDT64Table.end - GDT64Table - 1
+    .base   dq  GDT64Table
+GDT64Table:
+    .null   dq 0                              ; 0x00
+    .code64 dq FLAT_DESCRIPTOR_CODE64         ; 0x08
+    .data64 dq FLAT_DESCRIPTOR_DATA64         ; 0x10
+    .end:

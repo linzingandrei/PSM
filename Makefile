@@ -32,10 +32,16 @@ kernel32: $(SRC_C) init32
 init32: $(SRC_ASM)
 	nasm -fwin32 kernel/__init.asm -o kernel/__init.o
 
-run32:
+run32: kernel32
 	GDK_BACKEND=x11 bochs -q -f floppy_linux.bxrc
 
-run32-debug:
+run32-debug: kernel32
+	GDK_BACKEND=x11 bochs -q -f floppy_linux.bxrc -debugger
+
+run64: kernel
+	GDK_BACKEND=x11 bochs -q -f floppy_linux.bxrc
+
+run64-debug: make-floppy kernel init
 	GDK_BACKEND=x11 bochs -q -f floppy_linux.bxrc -debugger
 
 .PHONY: make-floppy kernel init

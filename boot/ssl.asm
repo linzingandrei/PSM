@@ -140,8 +140,8 @@ FLAT_DESCRIPTOR_DATA16  equ 0x000093000000FFFF  ; Data: Read/Write, accessed
     
 GDTTable:
     .null     dq 0                         ;  0
-    .code32   dq FLAT_DESCRIPTOR_CODE32    ;  8
-    .data32   dq FLAT_DESCRIPTOR_DATA32    ; 16
-    .code16   dq FLAT_DESCRIPTOR_CODE16    ; 24
-    .data16   dq FLAT_DESCRIPTOR_DATA16    ; 32 ;TODO!!! add 64-bits descriptors
+    .code32   dq FLAT_DESCRIPTOR_CODE32    ; 24
+    .data32   dq FLAT_DESCRIPTOR_DATA32    ; 32
+    .code16   dq FLAT_DESCRIPTOR_CODE16    ; 40
+    .data16   dq FLAT_DESCRIPTOR_DATA16    ; 48 
     .end:

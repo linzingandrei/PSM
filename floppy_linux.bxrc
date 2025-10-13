@@ -21,6 +21,9 @@ ata3: enabled=0
 pci: enabled=1, chipset=i440fx
 vga: extension=vbe, update_freq=5
 cpu: model=core2_penryn_t9600, count=1, ips=4000000, reset_on_triple_fault=1, ignore_bad_msrs=1
+# cpuid: level=1, x86_64=1
+# cpuid: level=6, 1g_pages=1
+# cpuid: level=6, 1g_pages=1
 # cpuid: level=6, stepping=3, model=3, family=6, vendor_string="GenuineIntel", brand_string="              Intel(R) Pentium(R) 4 CPU        "
 # cpuid: mmx=1, apic=xapic, simd=sse2, sse4a=0, misaligned_sse=0, sep=1, movbe=0, adx=0
 # cpuid: aes=0, sha=0, xsave=0, xsaveopt=0, x86_64=1, 1g_pages=0, pcid=0, fsgsbase=0
@@ -31,7 +34,7 @@ private_colormap: enabled=0
 clock: sync=realtime, time0=local, rtc_sync=0
 # no cmosimage
 # no loader
-log: -
+log: - 
 logprefix: %t%e%d
 debug: action=ignore
 info: action=report
