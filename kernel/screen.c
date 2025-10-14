@@ -1,6 +1,6 @@
 #include "screen.h"
 
-static PSCREEN gVideo = (PSCREEN)(0x000B8000);
+static PSCREEN gVideo = (PSCREEN)(0x000B8000 + 0x10000000000);
 
 void CursorMove(int row, int col)
 {
