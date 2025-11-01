@@ -1,6 +1,7 @@
 #include "main.h"
 #include "screen.h"
 #include "logging.h"
+#include "isr.h"
 
 
 void _KernelMain()
@@ -10,6 +11,8 @@ void _KernelMain()
     // __enableSSE();  // only for demo; in the future will be called from __init.asm
 
 
+    idt_install();
+    isr_install();
 
     // __magic();
     ClearScreen();
@@ -22,6 +25,28 @@ void _KernelMain()
 
     // __magic();
     HelloBoot();
+
+    __magic();
+
+
+    // DIVISION BY ZERO
+    // int a = 3 / 0;
+
+    // INVALID OPCODE
+    // __asm__ __volatile__("ud2");
+
+    // Double fault????
+    // int* p = 0;
+    // *p = 42;
+
+    // Page fault
+    volatile int *p = (int*)0xCAFEBABE;
+    *p = 1;
+
+    // extern void func1();
+
+    // func1();
+    __magic();
 
     asm("hlt");
 

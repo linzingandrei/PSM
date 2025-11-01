@@ -54,23 +54,12 @@ ASMEntryPoint:
     PT_ADDR equ 0x4000
     PT2_ADDR equ 0x5000
 
-    PDPT_ADDR_1TB equ 0x6000
-    PDT_ADDR_1TB equ 0x7000
-    PT_ADDR_1TB equ 0x8000
-    PT2_ADDR_1TB equ 0x9000
-
-    mov edi, 0x0
-    xor eax, eax
-    mov ecx, 512
-    rep stosd
+    ; mov edi, 0x0
+    ; xor eax, eax
+    ; mov ecx, 512
+    ; rep stosd
 
     mov edi, PML4_ADDR
-    xor eax, eax
-    mov ecx, 512
-    rep stosd 
-
-    mov edi, PML4_ADDR
-    add edi, 16
     xor eax, eax
     mov ecx, 512
     rep stosd 
@@ -88,21 +77,6 @@ ASMEntryPoint:
     mov edi, PT_ADDR
     xor eax, eax
     mov ecx, 1024
-    rep stosd
-
-    mov edi, PDPT_ADDR_1TB
-    xor eax, eax
-    mov ecx, 512
-    rep stosd
-
-    mov edi, PDT_ADDR_1TB
-    xor eax, eax
-    mov ecx, 512
-    rep stosd
-
-    mov edi, PT_ADDR_1TB
-    xor eax, eax
-    mov ecx, 1024 
     rep stosd
 
     ; break
@@ -132,27 +106,9 @@ ASMEntryPoint:
     mov dword [edi+8], PT2_ADDR | PT_PRESENT | PT_WRITABLE 
     mov dword [edi+12], 0
 
-    mov edi, PML4_ADDR
-    add edi, 16 
-    mov eax, PDPT_ADDR_1TB | PT_PRESENT | PT_WRITABLE
-    mov dword [edi], eax
-    mov dword [edi+4], 0 
-
-    mov edi, PDPT_ADDR_1TB 
-    mov eax, PDT_ADDR_1TB | PT_PRESENT | PT_WRITABLE
-    mov dword [edi], eax
-    mov dword [edi+4], 0 
-
-    mov edi, PDT_ADDR_1TB 
-    mov eax, PT_ADDR_1TB | PT_PRESENT | PT_WRITABLE
-    mov dword [edi], eax
-    mov dword [edi+4], 0 
-    mov dword [edi+8], PT2_ADDR_1TB | PT_PRESENT | PT_WRITABLE 
-    mov dword [edi+12], 0
-
     mov edi, PT_ADDR
     mov eax, 0x00
-    mov ecx, 512 
+    mov ecx, 512
     .SetPTEntry:
         mov ebx, eax
         or ebx, PT_PRESENT | PT_WRITABLE
@@ -176,18 +132,6 @@ ASMEntryPoint:
         add edi, 8
         loop .SetPTEntry2
     
-    mov edi, PT_ADDR_1TB
-    mov eax, 0x00
-    mov ecx, 1024 
-    .SetPTEntry1TB:
-        mov ebx, eax
-        or ebx, PT_PRESENT | PT_WRITABLE
-        mov dword [edi], ebx
-        mov dword [edi+4], 0
-        add eax, 0x1000
-        add edi, 8
-        loop .SetPTEntry1TB
-
     ; break
 
     CR4_PAE_ENABLE equ 1 << 5
@@ -196,10 +140,6 @@ ASMEntryPoint:
     mov cr4, eax
 
     ; break
-    ; 0x0000001000201270
-    ; 0x0000010000201270
-    ; 0x0000010000000000
-    ; 0x0000100000201270
 
     EFER_MSR equ 0xC0000080
     EFER_LM_ENABLE equ 1 << 8
@@ -214,7 +154,10 @@ ASMEntryPoint:
     or eax, (1 << 31) | (1 << 0)
     mov cr0, eax
 
-    break
+    ; break
+
+
+    ; break
 
     lgdt [GDT64]
     jmp 0x08:LongMode 
@@ -226,22 +169,16 @@ ASMEntryPoint:
         ; break
         cli
 
-        mov rax, 0x10 
+        mov ax, 0x10 
         mov ds, ax
         mov es, ax
         mov fs, ax
         mov gs, ax
         mov ss, ax
 
-
-        break
-
-        mov     rax, 0x1000
-        shl     rax, 28
-        or      rax, _KernelMain
-        mov     rsp, rax
-        jmp     rax 
-
+        MOV     RAX, _KernelMain
+        CALL    RAX
+        
         break
         CLI
         HLT
@@ -255,7 +192,7 @@ __cli:
 __sti:
     STI
     RET
- 
+
 __magic:
     XCHG    BX,BX
     RET

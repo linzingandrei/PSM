@@ -1,4 +1,5 @@
 #include "logging.h"
+#include "string.h"
 
 void InitLogging()
 {
@@ -32,4 +33,16 @@ void Log(char * Message)
         __outbyte(0x3F8, Message[i]);
         i++;
     }
+}
+
+void LogSerialAndScreen(char* FormatBuffer, ...)
+{
+    char logBuffer[LOG_BUF_MAX_SIZE];
+    va_list va;
+
+    va_start(va, FormatBuffer);
+    cl_vsnprintf(logBuffer, LOG_BUF_MAX_SIZE, FormatBuffer, va);
+
+    Log(logBuffer);
+    ScreenDisplay(logBuffer, COLOR_BLACK);
 }
