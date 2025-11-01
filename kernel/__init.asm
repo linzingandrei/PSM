@@ -54,10 +54,10 @@ ASMEntryPoint:
     PT_ADDR equ 0x4000
     PT2_ADDR equ 0x5000
 
-    mov edi, 0x0
-    xor eax, eax
-    mov ecx, 512
-    rep stosd
+    ; mov edi, 0x0
+    ; xor eax, eax
+    ; mov ecx, 512
+    ; rep stosd
 
     mov edi, PML4_ADDR
     xor eax, eax

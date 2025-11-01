@@ -6,6 +6,8 @@
 #define MAX_LINES       25
 #define MAX_COLUMNS     80
 #define MAX_OFFSET      2000 //25 lines * 80 chars
+#define COLOR_BLACK     0x00
+#define COLOR_BB_RF     0x04
 
 
 #pragma pack(push)
@@ -24,6 +26,7 @@ void ClearScreen();
 void PutChar(char C, int Pos);
 void PutString(char* String, int Pos);
 void PutStringLine(char* String, int Line);
+void ScreenDisplay(char* buffer, BYTE color);
 
 
 #endif // _SCREEN_H_

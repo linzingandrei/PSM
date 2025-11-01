@@ -63,7 +63,7 @@ cl_memmove(
 #pragma optimize("", on)
 
 void
-itoa(
+kitoa(
     PVOID       valueAddress,
     BOOLEAN     signedValue,
     char* buffer,
@@ -163,7 +163,7 @@ itoa(
 }
 
 void
-atoi(
+katoi(
     PVOID       valueAddress,
     char* buffer,
     DWORD       base,
@@ -525,7 +525,7 @@ cl_strlen_s(
     return i;
 }
 
-STATUS
+int
 cl_snprintf(
     char* outputBuffer,
     DWORD buffSize,
@@ -540,7 +540,7 @@ cl_snprintf(
     return cl_vsnprintf(outputBuffer, buffSize, inputBuffer, va);
 }
 
-STATUS
+int
 cl_vsnprintf(
     char* outputBuffer,
     DWORD       buffSize,
@@ -612,42 +612,42 @@ cl_vsnprintf(
             case 'b':
                 // we have an unsigned 32 bit value to print
                 temp_value = va_arg(argptr, DWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_TWO, FALSE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_TWO, FALSE);
                 break;
             case 'B':
                 // we have an unsigned 64 bit value to print
                 temp_value = va_arg(argptr, QWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_TWO, TRUE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_TWO, TRUE);
                 break;
             case 'u':
                 // we have an unsigned 32 bit value to print
                 temp_value = va_arg(argptr, DWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_TEN, FALSE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_TEN, FALSE);
                 break;
             case 'U':
                 // we have an unsigned 64 bit value to print
                 temp_value = va_arg(argptr, QWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_TEN, TRUE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_TEN, TRUE);
                 break;
             case 'd':
                 // we have a signed 32 bit value to print
                 temp_value = va_arg(argptr, DWORD);
-                itoa(&temp_value, TRUE, temp_str, BASE_TEN, FALSE);
+                kitoa(&temp_value, TRUE, temp_str, BASE_TEN, FALSE);
                 break;
             case 'D':
                 // we have a signed 64 bit value
                 temp_value = va_arg(argptr, QWORD);
-                itoa(&temp_value, TRUE, temp_str, BASE_TEN, TRUE);
+                kitoa(&temp_value, TRUE, temp_str, BASE_TEN, TRUE);
                 break;
             case 'x':
                 // we have a 32 bit hexadecimal value to print
                 temp_value = va_arg(argptr, DWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_HEXA, FALSE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_HEXA, FALSE);
                 break;
             case 'X':
                 // we have a 64 bit hexadecimal value to print
                 temp_value = va_arg(argptr, QWORD);
-                itoa(&temp_value, FALSE, temp_str, BASE_HEXA, TRUE);
+                kitoa(&temp_value, FALSE, temp_str, BASE_HEXA, TRUE);
                 break;
             case 'c':
                 // we have a character value to print

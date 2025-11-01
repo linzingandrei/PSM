@@ -37,7 +37,7 @@ typedef void*               PVOID;
 
 #define INVALID_STRING_SIZE             MAX_DWORD
 
-typedef _Return_type_success_(SUCCEEDED(return)) DWORD  STATUS;
+// typedef _Return_type_success_(SUCCEEDED(return)) DWORD  STATUS;
 
 #ifndef _VA_LIST_DEFINED
 #define _VA_LIST_DEFINED
@@ -80,7 +80,7 @@ typedef PBYTE               va_list;
 //                value
 //******************************************************************************
 void
-itoa(
+kitoa(
     PVOID       valueAddress,
     BOOLEAN     signedValue,
     char*       buffer,
@@ -89,22 +89,22 @@ itoa(
     );
 
 void
-atoi(
+katoi(
     PVOID       valueAddress,
     char*       buffer,
     DWORD       base,
     BOOLEAN     is64BitValue
     );
 
-STATUS
-cl_snprintf(
-    char* outputBuffer,
-    DWORD buffSize,
-    char* inputBuffer,
-    ...
-);
+// STATUS
+// cl_snprintf(
+//     char* outputBuffer,
+//     DWORD buffSize,
+//     char* inputBuffer,
+//     ...
+// );
 
-STATUS
+int
 cl_vsnprintf(
     char* outputBuffer,
     DWORD       buffSize,
@@ -112,7 +112,7 @@ cl_vsnprintf(
     va_list     argptr
 );
 
-#define atoi32(addr,buf,base)       atoi((addr),(buf),(base),FALSE)
-#define atoi64(addr,buf,base)       atoi((addr),(buf),(base),TRUE)
+#define katoi32(addr,buf,base)       katoi((addr),(buf),(base),FALSE)
+#define katoi64(addr,buf,base)       katoi((addr),(buf),(base),TRUE)
 
 #endif // _STRING_H_

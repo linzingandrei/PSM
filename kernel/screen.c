@@ -33,7 +33,7 @@ void CursorPosition(int pos)
 void HelloBoot()
 {
     int i, len;
-	char boot[] = "Hello Boot! Greetings from C...";
+	char boot[] = "Hell0 Boot! Greetings from C...";
 
 	len = 0;
 	while (boot[len] != 0)
@@ -47,6 +47,30 @@ void HelloBoot()
 		gVideo[i].c = boot[i];
 	}
     CursorPosition(i);
+}
+
+void ScreenDisplay(char* buffer, BYTE color) {
+    int i, len;
+
+    len = 0;
+    while (buffer[len] != 0) {
+        len += 1;
+    }
+
+    int aux;
+    for (i = 0, aux = 0; i < MAX_OFFSET && aux < len; i++, aux++) {
+        if (buffer[aux] == '\n') {
+            for (; i % MAX_COLUMNS < MAX_COLUMNS - 1; i++) {
+                gVideo[i].color = COLOR_BLACK;
+                gVideo[i].c = ' ';
+            }
+        }
+        else {
+            gVideo[i].color = COLOR_BB_RF;
+            gVideo[i].c = buffer[aux]; 
+        }
+        CursorPosition(i);
+    }
 }
 
 void ClearScreen()
