@@ -1,3 +1,4 @@
+#pragma once
 #include "idt.h"
 #include "main.h"
 #include "screen.h"
@@ -34,6 +35,23 @@ extern void isr_stub_28();
 extern void isr_stub_29();
 extern void isr_stub_30();
 extern void isr_stub_31();
+
+extern void isr_stub_32();
+extern void isr_stub_33();
+extern void isr_stub_34();
+extern void isr_stub_35();
+extern void isr_stub_36();
+extern void isr_stub_37();
+extern void isr_stub_38();
+extern void isr_stub_39();
+extern void isr_stub_40();
+extern void isr_stub_41();
+extern void isr_stub_42();
+extern void isr_stub_43();
+extern void isr_stub_44();
+extern void isr_stub_45();
+extern void isr_stub_46();
+extern void isr_stub_47();
 
 struct registers_t {
     QWORD r15, r14, r13, r12, rbp, rbx;

@@ -1,8 +1,11 @@
 #include "isr.h"
 #include "logging.h"
+#include "timer.h"
+#include "keyboard.h"
 
 
 void isr_install() {
+    // Software interrupts
     set_idt_gate(0, (QWORD)(isr_stub_0));
     set_idt_gate(1, (QWORD)(isr_stub_1));
     set_idt_gate(2, (QWORD)(isr_stub_2));
@@ -35,6 +38,24 @@ void isr_install() {
     set_idt_gate(29, (QWORD)(isr_stub_29));
     set_idt_gate(30, (QWORD)(isr_stub_30));
     set_idt_gate(31, (QWORD)(isr_stub_31));
+
+    // Hardware interrupts
+    set_idt_gate(32, (QWORD)(isr_stub_32));
+    set_idt_gate(33, (QWORD)(isr_stub_33));
+    set_idt_gate(34, (QWORD)(isr_stub_34));
+    set_idt_gate(35, (QWORD)(isr_stub_35));
+    set_idt_gate(36, (QWORD)(isr_stub_36));
+    set_idt_gate(37, (QWORD)(isr_stub_37));
+    set_idt_gate(38, (QWORD)(isr_stub_38));
+    set_idt_gate(39, (QWORD)(isr_stub_39));
+    set_idt_gate(40, (QWORD)(isr_stub_40));
+    set_idt_gate(41, (QWORD)(isr_stub_41));
+    set_idt_gate(42, (QWORD)(isr_stub_42));
+    set_idt_gate(43, (QWORD)(isr_stub_43));
+    set_idt_gate(44, (QWORD)(isr_stub_44));
+    set_idt_gate(45, (QWORD)(isr_stub_45));
+    set_idt_gate(46, (QWORD)(isr_stub_46));
+    set_idt_gate(47, (QWORD)(isr_stub_47));
 }
 
 char *exception_messages[32] = {
@@ -72,8 +93,8 @@ char *exception_messages[32] = {
     "Reserved"
 };
 
-void isr_handler(struct registers_t *regs) {
-    __magic();
+void isr_handler(struct registers_t* regs) {
+    // __magic();
 
     if (regs->int_no < 32) {
         ClearScreen();
@@ -90,5 +111,15 @@ void isr_handler(struct registers_t *regs) {
         // ScreenDisplay(regs->rax);
 
         for (;;);
+    }
+    else if (regs->int_no == 32) {
+        TimerHandler(regs);
+        __outbyte(0x20, 0x20);
+        return;
+    }
+    else if (regs->int_no == 33) {
+        KeyboardHandler(regs);
+        __outbyte(0x20, 0x20);
+        return;
     }
 }

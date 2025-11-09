@@ -114,6 +114,24 @@ isr_noerr_stub 29
 isr_noerr_stub 30
 isr_noerr_stub 31
 
+
+isr_noerr_stub 32
+isr_noerr_stub 33
+isr_noerr_stub 34
+isr_noerr_stub 35
+isr_noerr_stub 36
+isr_noerr_stub 37
+isr_noerr_stub 38
+isr_noerr_stub 39
+isr_noerr_stub 40
+isr_noerr_stub 41
+isr_noerr_stub 42
+isr_noerr_stub 43
+isr_noerr_stub 44
+isr_noerr_stub 45
+isr_noerr_stub 46
+isr_noerr_stub 47
+
 ;///////////////////////////////////////////////////////////
 
 segment .data
@@ -150,3 +168,20 @@ global isr_stub_28
 global isr_stub_29
 global isr_stub_30
 global isr_stub_31
+
+global isr_stub_32
+global isr_stub_33
+global isr_stub_34
+global isr_stub_35
+global isr_stub_36
+global isr_stub_37
+global isr_stub_38
+global isr_stub_39
+global isr_stub_40
+global isr_stub_41
+global isr_stub_42
+global isr_stub_43
+global isr_stub_44
+global isr_stub_45
+global isr_stub_46
+global isr_stub_47

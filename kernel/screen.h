@@ -27,6 +27,7 @@ void PutChar(char C, int Pos);
 void PutString(char* String, int Pos);
 void PutStringLine(char* String, int Line);
 void ScreenDisplay(char* buffer, BYTE color);
+void ScreenDisplayTimer(char*buffer, BYTE color);
 
 
 #endif // _SCREEN_H_

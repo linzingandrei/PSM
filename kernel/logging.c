@@ -46,3 +46,15 @@ void LogSerialAndScreen(char* FormatBuffer, ...)
     Log(logBuffer);
     ScreenDisplay(logBuffer, COLOR_BLACK);
 }
+
+void LogScreen(char* FormatBuffer, ...)
+{
+    char logBuffer[LOG_BUF_MAX_SIZE];
+    va_list va;
+
+    va_start(va, FormatBuffer);
+    cl_vsnprintf(logBuffer, LOG_BUF_MAX_SIZE, FormatBuffer, va);
+
+    Log(logBuffer);
+    ScreenDisplayTimer(logBuffer, COLOR_BLACK);
+}

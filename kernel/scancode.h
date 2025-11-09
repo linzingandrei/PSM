@@ -1,6 +1,8 @@
 #ifndef _SCANCODE_H_
 #define _SCANCODE_H_
 
+#include "main.h"
+
 typedef enum _KEYCODE
 {
 

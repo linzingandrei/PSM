@@ -180,7 +180,8 @@ ASMEntryPoint:
         CALL    RAX
         
         break
-        CLI
+        ; CLI
+        STI
         HLT
 
 ;;--------------------------------------------------------

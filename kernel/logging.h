@@ -11,6 +11,7 @@ void InitLogging();
 
 void Log(char * Message);
 void LogSerialAndScreen(char* FormatBuffer, ...);
+void LogScreen(char* Format, ...);
 
 
 #endif // _LOGGING_H_

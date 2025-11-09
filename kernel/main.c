@@ -2,6 +2,9 @@
 #include "screen.h"
 #include "logging.h"
 #include "isr.h"
+#include "pic.h"
+#include "timer.h"
+#include "keyboard.h"
 
 
 void _KernelMain()
@@ -13,6 +16,11 @@ void _KernelMain()
 
     idt_install();
     isr_install();
+    MapPIC();
+    MaskPIC();
+    // asm ("sti");
+    InitTimer(60);
+    InitKeyboard();
 
     // __magic();
     ClearScreen();
@@ -24,9 +32,9 @@ void _KernelMain()
     Log("Logging initialized!");
 
     // __magic();
-    HelloBoot();
+    // HelloBoot();
 
-    __magic();
+    // __magic();
 
 
     // DIVISION BY ZERO
@@ -40,15 +48,20 @@ void _KernelMain()
     // *p = 42;
 
     // Page fault
-    volatile int *p = (int*)0xCAFEBABE;
-    *p = 1;
+    // volatile int *p = (int*)0xCAFEBABE;
+    // *p = 1;
 
     // extern void func1();
 
     // func1();
-    __magic();
+    // __magic();
 
-    asm("hlt");
+    // asm("int $0x20");
+    while (1) {
+
+    }
+
+    // asm("hlt");
 
     // __magic(); 
 

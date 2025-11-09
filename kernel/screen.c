@@ -73,6 +73,20 @@ void ScreenDisplay(char* buffer, BYTE color) {
     }
 }
 
+void ScreenDisplayTimer(char* buffer, BYTE color) {
+    int len;
+
+    len = 0;
+    while (buffer[len] != 0) {
+        len += 1;
+    }
+
+    for (int i = MAX_COLUMNS - len - 1, j = 0; i < MAX_COLUMNS && j < len; i++, j++) {
+        gVideo[i].color = 10;
+        gVideo[i].c = buffer[j];
+    }
+}
+
 void ClearScreen()
 {
     int i;
@@ -84,5 +98,12 @@ void ClearScreen()
     }
 
     CursorMove(0, 0);
+}
+
+void PutChar(char C, int Pos) {
+    gVideo[Pos].color = 10;
+    gVideo[Pos].c = C;
+
+    CursorPosition(Pos + 1);
 }
 

@@ -15,7 +15,7 @@ void set_idt_gate(int n, QWORD handler) {
 }
 
 void idt_install() {
-    __magic();
+    // __magic();
     idtp.limit = sizeof(struct idt_entry) * 256 - 1;
     idtp.base = (QWORD) &idt;
     
