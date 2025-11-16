@@ -55,6 +55,6 @@ void LogScreen(char* FormatBuffer, ...)
     va_start(va, FormatBuffer);
     cl_vsnprintf(logBuffer, LOG_BUF_MAX_SIZE, FormatBuffer, va);
 
-    Log(logBuffer);
+    // Log(logBuffer);
     ScreenDisplayTimer(logBuffer, COLOR_BLACK);
 }

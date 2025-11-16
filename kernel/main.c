@@ -5,6 +5,9 @@
 #include "pic.h"
 #include "timer.h"
 #include "keyboard.h"
+#include "console_controller.h"
+#include "edit_mode_controller.h"
+#include "process_manager.h"
 
 
 void _KernelMain()
@@ -13,6 +16,7 @@ void _KernelMain()
     
     // __enableSSE();  // only for demo; in the future will be called from __init.asm
 
+    ClearScreen();
 
     idt_install();
     isr_install();
@@ -23,13 +27,15 @@ void _KernelMain()
     InitKeyboard();
 
     // __magic();
-    ClearScreen();
 
     // __magic();
     InitLogging();
 
     // __magic();
     Log("Logging initialized!");
+    InitConsole();
+    InitEditMode();
+    InitProcesses();
 
     // __magic();
     // HelloBoot();

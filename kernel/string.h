@@ -112,6 +112,23 @@ cl_vsnprintf(
     va_list     argptr
 );
 
+DWORD
+cl_strlen(
+    char* str
+);
+
+int
+cl_strcmp(
+    char* str1,
+    char* str2
+);
+
+void
+cl_strcpy(
+    char* dst,
+    char* src
+);
+
 #define katoi32(addr,buf,base)       katoi((addr),(buf),(base),FALSE)
 #define katoi64(addr,buf,base)       katoi((addr),(buf),(base),TRUE)
 

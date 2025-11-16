@@ -20,7 +20,13 @@ SRC_C =\
 	$(SRC_DIR)/pic.c \
 	$(SRC_DIR)/pic.h \
 	$(SRC_DIR)/keyboard.c \
-	$(SRC_DIR)/keyboard.h
+	$(SRC_DIR)/keyboard.h \
+	$(SRC_DIR)/console_controller.c \
+	$(SRC_DIR)/console_controller.h \
+	$(SRC_DIR)/edit_mode_controller.c \
+	$(SRC_DIR)/edit_mode_controller.h \
+	$(SRC_DIR)/process_manager.c \
+	$(SRC_DIR)/process_manager.h
 SRC_ASM =\
 	$(SRC_DIR)/__init.asm \
 	$(SRC_DIR)/isrs.asm
@@ -29,7 +35,7 @@ make-floppy: kernel
 	python3 utils/makeFloppy.py boot/mbr.asm boot/ssl.asm
 
 kernel: $(SRC_C) init
-	x86_64-w64-mingw32-gcc -O0 -ffreestanding -nostdlib -Wl,--image-base,0x200000,-e,ASMEntryPoint,--section-alignment,0x1000,--file-alignment,0x1000,--subsystem,native,-T,link_script.ld kernel/divide_by_zero.o kernel/isrs.o kernel/pic.c kernel/keyboard.c kernel/main.c kernel/timer.c kernel/string.c kernel/logging.c kernel/screen.c kernel/idt.c kernel/isr.c -o bin/kernel.exe
+	x86_64-w64-mingw32-gcc -O0 -ffreestanding -nostdlib -Wl,--image-base,0x200000,-e,ASMEntryPoint,--section-alignment,0x1000,--file-alignment,0x1000,--subsystem,native,-T,link_script.ld kernel/divide_by_zero.o kernel/isrs.o kernel/pic.c kernel/console_controller.c kernel/edit_mode_controller.c kernel/process_manager.c kernel/keyboard.c kernel/main.c kernel/timer.c kernel/string.c kernel/logging.c kernel/screen.c kernel/idt.c kernel/isr.c -o bin/kernel.exe
 
 init: $(SRC_ASM)
 	nasm -O0 -fwin64 kernel/__init.asm -o kernel/__init.o
