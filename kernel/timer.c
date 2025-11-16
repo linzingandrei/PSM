@@ -28,3 +28,9 @@ void TimerHandler(struct registers_t* r) {
         }
     }
 }
+
+QWORD read_tsc(void) {
+    DWORD lo, hi;
+    asm volatile("rdtsc" : "=a"(lo), "=d"(hi));
+    return ((QWORD)hi << 32) | lo;
+}

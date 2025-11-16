@@ -47,6 +47,33 @@ typedef enum _KEYCODE
 	KEY_Y = 'y',
 	KEY_Z = 'z',
 
+	KEY_A_UP = 'A',
+	KEY_B_UP = 'B',
+	KEY_C_UP = 'C',
+	KEY_D_UP = 'D',
+	KEY_E_UP = 'E',
+	KEY_F_UP = 'F',
+	KEY_G_UP = 'G',
+	KEY_H_UP = 'H',
+	KEY_I_UP = 'I',
+	KEY_J_UP = 'J',
+	KEY_K_UP = 'K',
+	KEY_L_UP = 'L',
+	KEY_M_UP = 'M',
+	KEY_N_UP = 'N',
+	KEY_O_UP = 'O',
+	KEY_P_UP = 'P',
+	KEY_Q_UP = 'Q',
+	KEY_R_UP = 'R',
+	KEY_S_UP = 'S',
+	KEY_T_UP = 'T',
+	KEY_U_UP = 'U',
+	KEY_V_UP = 'V',
+	KEY_W_UP = 'W',
+	KEY_X_UP = 'X',
+	KEY_Y_UP = 'Y',
+	KEY_Z_UP = 'Z',
+
 	KEY_RETURN = '\r',
 	KEY_ESCAPE = 0x1001,
 	KEY_BACKSPACE = '\b',
@@ -127,6 +154,7 @@ typedef enum _KEYCODE
 	KEY_KP_MINUS = '-',
 	KEY_KP_DECIMAL = '.',
 	KEY_KP_DIVIDE = '/',
+	KEY_PIPE = '|',
 	KEY_KP_ASTERISK = '*',
 	KEY_KP_NUMLOCK = 0x300f,
 	KEY_KP_ENTER = 0x3010,
@@ -250,6 +278,98 @@ static WORD _kkybrd_scancode_std[] = {
 	KEY_UNKNOWN,        //0x56
 	KEY_F11,            //0x57
 	KEY_F12             //0x58
+};
+
+static WORD _kkybrd_scancode_std_shift[] = {
+    KEY_UNKNOWN,        //0
+    KEY_ESCAPE,         //1
+    KEY_EXCLAMATION,    //2 '1' -> '!'
+    KEY_AT,             //3 '2' -> '@'
+    KEY_HASH,           //4 '3' -> '#'
+    KEY_DOLLAR,         //5 '4' -> '$'
+    KEY_PERCENT,        //6 '5' -> '%'
+    KEY_CARRET,         //7 '6' -> '^'
+    KEY_AMPERSAND,      //8 '7' -> '&'
+    KEY_ASTERISK,       //9 '8' -> '*'
+    KEY_LEFTPARENTHESIS,//0xa '9' -> '('
+    KEY_RIGHTPARENTHESIS,//0xb '0' -> ')'
+    KEY_UNDERSCORE,     //0xc '-' -> '_'
+    KEY_PLUS,           //0xd '=' -> '+'
+    KEY_BACKSPACE,      //0xe
+    KEY_TAB,            //0xf
+    KEY_Q_UP,           //0x10
+    KEY_W_UP,           //0x11
+    KEY_E_UP,           //0x12
+    KEY_R_UP,           //0x13
+    KEY_T_UP,           //0x14
+    KEY_Y_UP,           //0x15
+    KEY_U_UP,           //0x16
+    KEY_I_UP,           //0x17
+    KEY_O_UP,           //0x18
+    KEY_P_UP,           //0x19
+    KEY_LEFTBRACKET,    //0x1a '[' -> '{' handled separately if needed
+    KEY_RIGHTBRACKET,   //0x1b ']' -> '}' handled separately
+    KEY_RETURN,         //0x1c
+    KEY_LCTRL,          //0x1d
+    KEY_A_UP,           //0x1e
+    KEY_S_UP,           //0x1f
+    KEY_D_UP,           //0x20
+    KEY_F_UP,           //0x21
+    KEY_G_UP,           //0x22
+    KEY_H_UP,           //0x23
+    KEY_J_UP,           //0x24
+    KEY_K_UP,           //0x25
+    KEY_L_UP,           //0x26
+    KEY_COLON,          //0x27 ';' -> ':'
+    KEY_QUOTEDOUBLE,    //0x28 '\'' -> '"'
+    KEY_TILDE,          //0x29 '`' -> '~'
+    KEY_LSHIFT,         //0x2a
+    KEY_PIPE,           //0x2b '\' -> '|'
+    KEY_Z_UP,           //0x2c
+    KEY_X_UP,           //0x2d
+    KEY_C_UP,           //0x2e
+    KEY_V_UP,           //0x2f
+    KEY_B_UP,           //0x30
+    KEY_N_UP,           //0x31
+    KEY_M_UP,           //0x32
+    KEY_LESS,           //0x33 ',' -> '<'
+    KEY_GREATER,        //0x34 '.' -> '>'
+    KEY_QUESTION,       //0x35 '/' -> '?'
+    KEY_RSHIFT,         //0x36
+    KEY_KP_ASTERISK,    //0x37
+    KEY_RALT,           //0x38
+    KEY_SPACE,          //0x39
+    KEY_CAPSLOCK,       //0x3a
+    KEY_F1,             //0x3b
+    KEY_F2,             //0x3c
+    KEY_F3,             //0x3d
+    KEY_F4,             //0x3e
+    KEY_F5,             //0x3f
+    KEY_F6,             //0x40
+    KEY_F7,             //0x41
+    KEY_F8,             //0x42
+    KEY_F9,             //0x43
+    KEY_F10,            //0x44
+    KEY_KP_NUMLOCK,     //0x45
+    KEY_SCROLLLOCK,     //0x46
+    KEY_KP_7,           //0x47
+    KEY_KP_8,           //0x48
+    KEY_KP_9,           //0x49
+    KEY_KP_MINUS,       //0x4a
+    KEY_KP_4,           //0x4b
+    KEY_KP_5,           //0x4c
+    KEY_KP_6,           //0x4d
+    KEY_KP_PLUS,        //0x4e
+    KEY_KP_1,           //0x4f
+    KEY_KP_2,           //0x50
+    KEY_KP_3,           //0x51
+    KEY_KP_0,           //0x52
+    KEY_KP_DECIMAL,     //0x53
+    KEY_UNKNOWN,        //0x54
+    KEY_UNKNOWN,        //0x55
+    KEY_UNKNOWN,        //0x56
+    KEY_F11,            //0x57
+    KEY_F12             //0x58
 };
 
 static WORD _kkybrd_scancode_ext[] = {

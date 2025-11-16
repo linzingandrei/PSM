@@ -8,3 +8,4 @@
 
 void InitTimer(int rate);
 void TimerHandler(struct registers_t* r);
+QWORD read_tsc(void);
