@@ -67,6 +67,11 @@ void ScreenDisplay(char* buffer, BYTE color) {
 
     int aux;
     for (i = start, aux = 0; i < MAX_OFFSET && aux < len; i++, aux++) {
+        if (i == MAX_OFFSET && len - aux > 0) {
+            // HandleScreen();
+            // gVideo = currentProcess->processBuffer + 80;
+        }
+
         PutChar(buffer[aux], i, COLOR_WHITE);
         global_pos = i + 1;
         // CursorPosition(i);

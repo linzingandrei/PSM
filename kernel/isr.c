@@ -122,4 +122,11 @@ void isr_handler(struct registers_t* regs) {
         __outbyte(0x20, 0x20);
         return;
     }
+    // else if (regs->int_no == 46) {
+    //     Log("SALUT");
+    //     AtaHandler();
+    //     __outbyte(0xA0, 0x20);
+    //     __outbyte(0x20, 0x20);
+    //     return;
+    // }
 }

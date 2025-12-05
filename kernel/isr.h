@@ -2,6 +2,7 @@
 #include "idt.h"
 #include "main.h"
 #include "screen.h"
+#include "pio.h"
 
 extern void isr_stub_0();
 extern void isr_stub_1();

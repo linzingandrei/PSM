@@ -8,6 +8,7 @@
 typedef struct _PROCESS
 {
     SCREEN* processBuffer;
+    SCREEN* processScrollBuffer; 
     int positionInProcess;
     int endPositionInProcess;
     char* processName;

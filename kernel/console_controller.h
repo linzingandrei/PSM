@@ -2,6 +2,7 @@
 #include "string.h"
 #include "screen.h"
 #include "process_manager.h"
+#include "pio.h"
 
 
 extern PROCESS consoleContext;

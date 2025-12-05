@@ -4,6 +4,7 @@
 
 PROCESS consoleContext;
 SCREEN gConsoleBuffer[MAX_OFFSET];
+// SCREEN gConsoleScrollBuffer[MAX_OFFSET * 3];
 
 COMMAND_HISTORY commandHistoryInstance;
 COMMAND_HISTORY* commandHistory;
@@ -67,6 +68,41 @@ int ConsoleCommands(char* command) {
     }
     else if (cl_strcmp(command, "edit") == 0) {
         SwitchContext("EDIT");
+        return 0;
+    }
+    else if(cl_strcmp(command, "dmpmem") == 0) {
+        BYTE buffer[1024] = { 0 };
+        BYTE buffer2[1024] = { 0 };
+
+        AtaPioRead28(0, 2, buffer);
+
+        DWORD nr = 0;
+        DWORD itemsPerRow = 5;
+        DWORD address = 0;
+        for (int i = 380; i < 512; i++, nr += 1, address += 1) {
+            // LogSerialAndScreen("%d", i + 250);
+            if (nr % itemsPerRow == 0) {
+                LogSerialAndScreen("0x%x ", address);
+            }
+
+            if (nr % itemsPerRow == 0 && nr > 0)  {
+                for (int j = 0; j < itemsPerRow; j++) {
+                    LogSerialAndScreen("%c ", (BYTE)buffer2[j]);
+                }
+
+                for (int j = 0; j < itemsPerRow; j++) {
+                    buffer2[j] = '\x00';
+                }
+
+                Newline();
+            }
+
+            buffer2[i % itemsPerRow] = buffer[i];
+            LogSerialAndScreen("%x ", (BYTE)buffer[i]);
+        }
+
+        Newline();
+
         return 0;
     }
     else {

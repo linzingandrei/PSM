@@ -52,6 +52,6 @@ void MapPIC() {
 
 void MaskPIC() {
     // Mask all except keyboard and timer, both of which are on the master, that's why the slave has everything masked
-    __outbyte(0x21, 0xFC);
-    __outbyte(0xA1, 0xFF);
+    __outbyte(0x21, 0x00);
+    __outbyte(0xA1, 0x00);
 }

@@ -2,15 +2,16 @@
 
 
 PROCESS editModeContext;
-SCREEN gEditModeBuffer[MAX_OFFSET];
+SCREEN gEditModeBuffer[MAX_OFFSET * 2];
+// SCREEN gEditModeScrollBuffer[MAX_OFFSET * 3];
 
 void InitEditMode() {
-    for (int i = 0; i < MAX_OFFSET; i++) {
+    for (int i = 0; i < MAX_OFFSET * 2; i++) {
         gEditModeBuffer[i].c = ' ';
         gEditModeBuffer[i].color = COLOR_WHITE;
     }
 
-    editModeContext.processBuffer = gEditModeBuffer;
+    editModeContext.processBuffer = (gEditModeBuffer + MAX_OFFSET / 2);
     editModeContext.positionInProcess = 0;
     editModeContext.endPositionInProcess = 0; 
     editModeContext.processName = "EDIT\0";
@@ -46,5 +47,9 @@ int EditModeCommands(char* command) {
 }
 
 void HandleScreen() {
-
+    if (currentProcess->positionInProcess == 2000) {
+        SCREEN* newStart = gEditModeBuffer + 80;
+        editModeContext.processBuffer = newStart;
+        gVideo = newStart;
+    }
 }

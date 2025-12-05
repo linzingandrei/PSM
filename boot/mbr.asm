@@ -14,6 +14,7 @@ BootMain:
     mov    sp,    BootMain ; prepare a stack - the memory from 7BFFh down to 500h is unused - see http://www.brokenthorn.com/Resources/OSDev7.html
  
     mov    ah,    0       
+    mov    dh,    0x80
     int    13h             ; reset the boot drive
     
     mov    ah,    02h      ; parameters for calling int13 (ReadSectors)
